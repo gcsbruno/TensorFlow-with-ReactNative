@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image, View, ActivityIndicator } from 'react-native';
+import { Image, View, ActivityIndicator, SafeAreaView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker'
 import { styles } from './styles';
 import { useState } from 'react';
@@ -56,28 +56,30 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={{ flex: 1 , backgroundColor: '#171717'}}>
+      <View style={styles.container}>
 
-      <StatusBar
-        style="light"
-        backgroundColor='transparent'
-        translucent />
+        <StatusBar
+          style="light"
+          backgroundColor='transparent'
+          translucent />
 
-      <Image
-        source={{ uri: selectedImageUri ? selectedImageUri : 'https://img.freepik.com/premium-vector/photo-icon-picture-icon-image-sign-symbol-vector-illustration_64749-4409.jpg' }}
-        style={styles.image}
-      />
+        <Image
+          source={{ uri: selectedImageUri ? selectedImageUri : 'https://img.freepik.com/premium-vector/photo-icon-picture-icon-image-sign-symbol-vector-illustration_64749-4409.jpg' }}
+          style={styles.image}
+        />
 
-      <View style={styles.results}>
-        {results.map((result) => (
-          <Classification key={result.className} data={result} />
-        ))
-        }
+        <View style={styles.results}>
+          {results.map((result) => (
+            <Classification key={result.className} data={result} />
+          ))
+          }
+        </View>
+        {isLoading
+          ? <ActivityIndicator color="#5F1BBF" />
+          : <Button title="Selecionar Imagem" onPress={handleSelectImage} />}
       </View>
-      {isLoading
-        ? <ActivityIndicator color="#5F1BBF" />
-        : <Button title="Selecionar Imagem" onPress={handleSelectImage} />}
-    </View>
+    </SafeAreaView>
   );
 }
 
